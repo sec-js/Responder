@@ -483,13 +483,13 @@ def ParseDIGESTMD5(data, client, Challenge):
 			realm = realm_match.group(1) if realm_match else ''
 			nonce = nonce_match.group(1) if nonce_match else ''
 			cnonce = cnonce_match.group(1) if cnonce_match else ''
-			nc = nc_match.group(1) if nc_match else ''
+			nc = nc_match.group(1) if nc_match else '00000001'
 			qop = qop_match.group(1) if qop_match else ''
 			uri = uri_match.group(1) if uri_match else ''
 			response = response_match.group(1)
 			
 			# Format for hashcat/john
-			hash_string = '%s:$sasl$DIGEST-MD5$%s$%s$%s$%s$%s$%s$%s' % (username, realm, nonce, cnonce, nc, qop, uri, response)
+			hash_string = '%s:$sasl$DIGEST-MD5$%s$%s$%s$%s$%s$%s$%s$%s' % (username, realm, username, nonce, cnonce, nc, qop, uri, response)
 			
 			SaveToDb({
 				'module': 'LDAP',
